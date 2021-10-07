@@ -1,8 +1,17 @@
+import { ChangeEvent, Dispatch } from 'react-router/node_modules/@types/react';
 import './TheHeaderCurrencyQuote.scss';
+
+interface Props {
+  currencyQuote: string;
+  setCurrencyQuote: Dispatch<React.SetStateAction<string>>;
+}
 
 const CURRENCIES = ['USD', 'EUR', 'NOK', 'JPY', 'AUD', 'CHF'];
 
-function TheHeaderCurrencyQuote() {
+function TheHeaderCurrencyQuote({ currencyQuote, setCurrencyQuote }: Props) {
+  function handleSelect(e: ChangeEvent<HTMLSelectElement>) {
+    setCurrencyQuote(e.target.value);
+  }
   return (
     <div className="header__select header__elem select">
       <label className="select__label" htmlFor="selectCurrencyQuote">
@@ -10,7 +19,8 @@ function TheHeaderCurrencyQuote() {
       </label>
       <select
         className="select__select"
-        // v-model="currencyQuote"
+        value={currencyQuote}
+        onChange={handleSelect}
         name="selectCurrencyQuote"
         id="selectCurrencyQuote"
       >

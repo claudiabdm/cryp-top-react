@@ -1,9 +1,15 @@
 import { Link, NavLink, useParams } from 'react-router-dom';
 import TheHeaderCurrencyQuote from './TheHeaderCurrencyQuote';
+import { Dispatch } from 'react';
 
 import './TheHeader.scss';
 
-function TheHeader() {
+interface Props {
+  currencyQuote: string;
+  setCurrencyQuote: Dispatch<React.SetStateAction<string>>;
+}
+
+function TheHeader({currencyQuote, setCurrencyQuote}: Props) {
   let { symbol } = useParams<{ symbol: string }>();
 
   return (
@@ -46,7 +52,7 @@ function TheHeader() {
             {symbol}
           </NavLink>
         </nav>
-        <TheHeaderCurrencyQuote />
+        <TheHeaderCurrencyQuote setCurrencyQuote={setCurrencyQuote} currencyQuote={currencyQuote} />
       </div>
       <div className="header__row">{/* <TheCurrenciesTicker /> */}</div>
     </header>

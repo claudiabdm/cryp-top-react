@@ -1,0 +1,17 @@
+@use '../styles/mixins/mixins' as *;
+
+.top-crypto-table {
+  &__name {
+    @include flex(center, flex-start);
+  }
+  &__logo {
+    margin-right: rem(10px);
+  }
+}
+
+.up {
+  color: var(--secondary);
+}
+.down {
+  color: var(--tertiary);
+}

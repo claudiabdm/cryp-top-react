@@ -1,7 +1,7 @@
 import './BaseLoadingSpinner.scss';
 
 interface Props {
-  size: number | string
+  size?: number | string
 }
 
 function BaseLoadingSpinner({size = 60}: Props) {
