@@ -1,0 +1,45 @@
+@use '../styles/mixins/mixins' as *;
+.header {
+  padding: rem(10px);
+  &__row {
+    @include flex(flex-start, space-between);
+    width: 100%;
+    flex-wrap: wrap-reverse;
+  }
+  &__elem {
+    margin-top: clamp(1rem, 2.5vw, 5vw);
+  }
+  &__title {
+    @include flex(center, flex-start);
+    color: var(--primary-dark);
+  }
+  &__title-link {
+    font-size: clamp(2.5rem, 2vw, 3vw);
+    font-weight: 700;
+  }
+  &__select {
+    margin-right: 0;
+    margin-left: auto;
+  }
+}
+.breadcrumbs {
+  @include flex(center, flex-start);
+  @include size(auto, rem(18px));
+  margin-top: rem(20px);
+  font-size: 1rem;
+  &__link {
+    color: var(--grey-500);
+    &--active {
+      color: var(--grey-500);
+    }
+    &:hover:not(.breadcrumbs__link--active) {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+  }
+
+  &__separator {
+    @include size(rem(18px), rem(18px));
+    margin: 0 rem(10px);
+  }
+}
