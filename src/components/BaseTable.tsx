@@ -1,5 +1,6 @@
 import { AriaAttributes, ReactElement, useEffect, useState } from 'react';
-import { Column, ColumnState, ColumnType, Row } from '../types/table';
+import { Flipped, Flipper } from 'react-flip-toolkit';
+import { Column, ColumnDirection, ColumnType, Row } from '../types/table';
 import { sortRows } from '../utils/sorting';
 import BaseLoadingSpinner from './BaseLoadingSpinner';
 import './BaseTable.scss';
@@ -13,44 +14,61 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
   const [alertActive, setAlertActive] =
     useState<AriaAttributes['aria-live']>('polite');
   const [ariaBusy, setAriaBusy] = useState(true);
-  const [columnState, setColumnState] = useState<ColumnState>('none');
   const [sortedRows, setSortedRows] = useState<Row[] | null>(null);
-  const [columnSorted, setColumnSorted] = useState<{
-    name: string;
+  const [sortedColumn, setSortedColumn] = useState<{
+    name: string | null;
     type: ColumnType;
+    direction: ColumnDirection;
   }>({
-    name: '',
+    name: null,
     type: 'string',
+    direction: 'none',
   });
 
   useEffect(() => {
     if (rows != null) {
       setAlertActive('off');
       setAriaBusy(false);
-      setSortedRows(rows);
     }
   }, [rows]);
 
-  function handleSortBy(column: Column, columnName: string) {
-    // changeColumnState(columnName);
-    // setColumnSorted({ name: columnName, type: column.type || 'string' });
-    // setSortedRows(sortRows(rows as Row[], { name: columnName, type: column.type || 'string' }, columnState) as Row[]);
+  useEffect(() => {
+    if (rows != null) {
+      const newSortedRows = sortRows(rows, { ...sortedColumn });
+      setSortedRows(newSortedRows);
+      console.log('render-layout');
+    }
+  }, [rows, sortedColumn]);
+
+  function handleSortBy(columnType: ColumnType, columnName: string) {
+    const direction = calculateColumnDirection(
+      sortedColumn.direction,
+      sortedColumn.name,
+      columnName
+    );
+    setSortedColumn({
+      name: columnName,
+      type: columnType || 'string',
+      direction,
+    });
   }
 
-  // function changeColumnState(newColumnName: string) {
-  //   if (columnSorted.name !== '' && columnSorted.name !== newColumnName) {
-  //     setColumnState('up');
-  //     return;
-  //   }
-  //   if (columnState === 'none') {
-  //     setColumnState('up');
-  //   } else if (columnState === 'up') {
-  //     setColumnState('down');
-  //   } else {
-  //     setColumnState('none');
-  //     setColumnSorted({ name: '', type: 'string' });
-  //   }
-  // }
+  function calculateColumnDirection(
+    columnDirection: ColumnDirection,
+    oldColumnName: string | null,
+    newColumnName: string
+  ) {
+    if (
+      (oldColumnName !== null && oldColumnName !== newColumnName) ||
+      columnDirection === 'none'
+    ) {
+      return 'up';
+    } else if (columnDirection === 'up') {
+      return 'down';
+    } else {
+      return 'none';
+    }
+  }
 
   return (
     <div className="table-outer">
@@ -67,8 +85,8 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
                 >
                   <button
                     type="button"
-                    aria-label={`Sort by ${columnName} ${columnState}`}
-                    onClick={() => handleSortBy(column, columnName)}
+                    aria-label={`Sort by ${columnName} ${sortedColumn.direction}`}
+                    onClick={() => handleSortBy(sortedColumn.type, columnName)}
                     className={`table__cell-inner table__cell-inner--flex table__cell-inner--button ${column.align}`}
                   >
                     <span>{column.name}</span>
@@ -79,8 +97,10 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
-                      className={`table__icon table__icon--${columnState} ${
-                        columnSorted.name !== columnName && 'table__icon--none'
+                      className={`table__icon table__icon--${
+                        sortedColumn.direction
+                      } ${
+                        sortedColumn.name !== columnName && 'table__icon--none'
                       }`}
                     >
                       <path
@@ -95,9 +115,11 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
               ))}
             </tr>
           </thead>
-          <tbody
+          <Flipper
+            flipKey={sortedRows}
+            element="tbody"
             className="table__body"
-            role="alert"
+            // role="alert"
             aria-live={alertActive}
             aria-busy={ariaBusy}
           >
@@ -118,25 +140,28 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
               </tr>
             ) : (
               sortedRows.map((row) => (
-                <tr className="table__row list-complete-item" key={row.id}>
-                  {Object.entries(columns).map(([columnName, column]) => (
-                    <td
-                      key={columnName}
-                      className={`table__cell ${column.align}`}
-                      data-col="columnName"
-                    >
-                      {rowContent || (
-                        <div className="table__cell-inner">
-                          {(column.component && column.component({ ...row })) ||
-                            row[columnName]}
-                        </div>
-                      )}
-                    </td>
-                  ))}
-                </tr>
+                <Flipped key={row.id} flipId={row.id}>
+                  <tr className="table__row list-complete">
+                    {Object.entries(columns).map(([columnName, column]) => (
+                      <td
+                        key={columnName}
+                        className={`table__cell ${column.align}`}
+                        data-col="columnName"
+                      >
+                        {rowContent || (
+                          <div className="table__cell-inner">
+                            {(column.component &&
+                              column.component({ ...row })) ||
+                              row[columnName]}
+                          </div>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                </Flipped>
               ))
             )}
-          </tbody>
+          </Flipper>
         </table>
       </div>
     </div>

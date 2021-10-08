@@ -1,25 +1,28 @@
-import { ColumnState, ColumnType, Row } from '../types/table';
+import { ColumnDirection, ColumnType, Row } from '../types/table';
 
 export function sortRows(
   rows: Row[],
-  column: {
-    name: string;
+  sortedColumn: {
+    name: string | null;
     type: ColumnType;
-  },
-  columnState: ColumnState
-) {
-  if (column.type == null || column.type === 'string') {
-    return sortRowsByCol(rows, column.name, columnState);
+    direction: ColumnDirection;
   }
-  return null;
+) {
+  if (
+    sortedColumn.name != null &&
+    (sortedColumn.type == null || sortedColumn.type === 'string')
+  ) {
+    return sortRowsByCol(rows, sortedColumn.name, sortedColumn.direction);
+  }
+  return rows;
 }
 
 export function sortRowsByCol(
   rows: Row[],
   columnName: string,
-  columnState: ColumnState
+  columnDirection: ColumnDirection
 ) {
-  if (columnState === 'up') {
+  if (columnDirection === 'up') {
     return [...rows].sort((a, b) =>
       a[columnName] < b[columnName]
         ? -1
@@ -27,7 +30,7 @@ export function sortRowsByCol(
         ? 0
         : 1
     );
-  } else if (columnState === 'down') {
+  } else if (columnDirection === 'down') {
     return [...rows].sort((a, b) =>
       a[columnName] > b[columnName]
         ? -1

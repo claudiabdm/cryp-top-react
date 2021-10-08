@@ -12,8 +12,10 @@
     "@types/react-router-dom": "^5.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-flip-toolkit": "^7.0.13",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.2",
     "sass": "^1.42.1",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.27",
+    "@types/react-transition-group": "^4.4.3",
     "autoprefixer": "^9.8.8",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"

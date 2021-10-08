@@ -1,7 +1,7 @@
 import { ReactElement } from 'react-dom/node_modules/@types/react';
 
 export type ColumnType = 'number' | 'string' | 'date' | null;
-export type ColumnState = 'up' | 'down' | 'none';
+export type ColumnDirection = 'up' | 'down' | 'none';
 export interface Column {
   name: string;
   align: 'center' | 'left' | 'right';
