@@ -1,0 +1,58 @@
+@use '../styles/mixins/mixins' as *;
+.currency {
+  @include flex(center, center, column);
+  flex-wrap: wrap;
+  margin: rem(10px);
+  border-radius: rem(10px);
+
+  &__elem {
+    margin: 2vw 0;
+  }
+  &__row {
+    @include flex(center, space-between);
+    width: 100%;
+    &--center {
+      justify-content: center;
+    }
+  }
+  &__header {
+    @include flex(center, flex-start);
+    font-size: clamp(1rem, 3vw, 4vw);
+    font-weight: 700;
+  }
+  &__header-text {
+    margin-left: 1.5vw;
+  }
+  &__symbol {
+    margin-left: 0.25em;
+    font-size: 0.5em;
+    align-self: flex-end;
+    color: var(--grey-500);
+  }
+  &__price {
+    @include flex(center, flex-start);
+    font-size: clamp(1rem, 1.5vw, 2vw);
+    white-space: nowrap;
+  }
+  &__change {
+    margin-left: 0.5em;
+    border-radius: rem(10px);
+    padding: 0.5em;
+    color: #fff;
+    background-color: var(--secondary);
+    font-size: 0.75em;
+    &--up {
+      background-color: var(--secondary);
+    }
+    &--down {
+      background-color: var(--tertiary);
+    }
+  }
+  &__chart {
+    width: 100%;
+    min-height: rem(200px);
+    @media screen and (min-width: 728px) {
+      min-height: rem(450px);
+    }
+  }
+}
