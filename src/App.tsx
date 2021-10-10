@@ -5,6 +5,7 @@ import './App.css';
 import TheHeader from './components/TheHeader';
 import { Currency } from './types/models';
 import { fetchTopCurrencies } from './utils/fetchTopCurrencies';
+import CurrencyDetails from './views/CurrencyDetails';
 import TopCurrencies from './views/TopCurrencies';
 
 function App() {
@@ -19,12 +20,19 @@ function App() {
 
   return (
     <Router>
-      <TheHeader setCurrencyQuote={setCurrencyQuote} currencyQuote={currencyQuote} />
+      <Route path={['/currencies/:symbol', '*']}>
+        <TheHeader
+          setCurrencyQuote={setCurrencyQuote}
+          currencyQuote={currencyQuote}
+        />
+      </Route>
       <main>
         <Switch>
-          <Route path="/currencies/:symbol"></Route>
+          <Route path="/currencies/:symbol">
+            <CurrencyDetails currencies={currencies} />
+          </Route>
           <Route path="/">
-            <TopCurrencies currencies={currencies}></TopCurrencies>
+            <TopCurrencies currencies={currencies} />
           </Route>
         </Switch>
       </main>

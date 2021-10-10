@@ -27,7 +27,7 @@
   @include size(auto, rem(18px));
   margin-top: rem(20px);
   font-size: 1rem;
-  &__link {
+  a.breadcrumbs__link {
     color: var(--grey-500);
     &--active {
       color: var(--grey-500);

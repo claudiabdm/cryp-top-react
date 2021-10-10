@@ -9,8 +9,8 @@ interface Props {
   setCurrencyQuote: Dispatch<React.SetStateAction<string>>;
 }
 
-function TheHeader({currencyQuote, setCurrencyQuote}: Props) {
-  let { symbol } = useParams<{ symbol: string }>();
+function TheHeader({ currencyQuote, setCurrencyQuote }: Props) {
+  const { symbol } = useParams<{ symbol: string }>();
 
   return (
     <header className="header">
@@ -24,6 +24,7 @@ function TheHeader({currencyQuote, setCurrencyQuote}: Props) {
           <NavLink
             className="breadcrumbs__link"
             to="/"
+            exact
             activeClassName="breadcrumbs__link--active"
           >
             Top 10 currencies
@@ -37,9 +38,9 @@ function TheHeader({currencyQuote, setCurrencyQuote}: Props) {
               className="breadcrumbs__separator"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M9 5l7 7-7 7"
               />
             </svg>
@@ -47,12 +48,16 @@ function TheHeader({currencyQuote, setCurrencyQuote}: Props) {
           <NavLink
             className="breadcrumbs__link"
             to={`/currencies/${symbol}`}
+            exact
             activeClassName="breadcrumbs__link--active"
           >
             {symbol}
           </NavLink>
         </nav>
-        <TheHeaderCurrencyQuote setCurrencyQuote={setCurrencyQuote} currencyQuote={currencyQuote} />
+        <TheHeaderCurrencyQuote
+          setCurrencyQuote={setCurrencyQuote}
+          currencyQuote={currencyQuote}
+        />
       </div>
       <div className="header__row">{/* <TheCurrenciesTicker /> */}</div>
     </header>
