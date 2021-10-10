@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Currency } from '../types/models';
 import { Column } from '../types/table';
 import BaseTable from './BaseTable';
@@ -27,7 +28,7 @@ const COLUMNS = {
     name: 'Change (24h)',
     align: 'right',
     component: (row: Currency) => (
-      <Change24hCell change24hDisplay={row.change24hDisplay} />
+      <Change24hCell name={row.name} change24hDisplay={row.change24hDisplay} />
     ),
   },
   volume24h: {
@@ -43,30 +44,34 @@ function TopCurrenciesTable({ currencies }: Props) {
 
 function NameCell({ name = '', logo = '' }) {
   return (
-    <div className="top-crypto-table__name">
-      <img
-        className="top-crypto-table__logo"
-        src={logo}
-        alt=""
-        srcSet=""
-        width="24"
-        height="24"
-      />
-      <span>{name}</span>
-    </div>
+    <Link to={`/currencies/${name}`}>
+      <div className="top-crypto-table__name">
+        <img
+          className="top-crypto-table__logo"
+          src={logo}
+          alt=""
+          srcSet=""
+          width="24"
+          height="24"
+        />
+        <span>{name}</span>
+      </div>
+    </Link>
   );
 }
 
-function Change24hCell({ change24hDisplay = '' }) {
+function Change24hCell({ name = '', change24hDisplay = '' }) {
   return (
-    <span className={`${change24hDisplay.includes('-') ? 'down' : 'up'}`}>
-      {change24hDisplay}
-    </span>
+    <Link to={`/currencies/${name}`}>
+      <span className={`${change24hDisplay.includes('-') ? 'down' : 'up'}`}>
+        {change24hDisplay}
+      </span>
+    </Link>
   );
 }
 
 function getDisplayValue(row: Currency, columnName: keyof Currency) {
-  return row[columnName];
+  return <Link to={`/currencies/${row.name}`}>{row[columnName]}</Link>;
 }
 
 export default TopCurrenciesTable;
