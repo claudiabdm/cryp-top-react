@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch } from 'react-router/node_modules/@types/react';
+import { ChangeEvent, Dispatch } from 'react';
 import './TheHeaderCurrencyQuote.scss';
 
 interface Props {

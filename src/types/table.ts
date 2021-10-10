@@ -1,4 +1,5 @@
-import { ReactElement } from 'react-dom/node_modules/@types/react';
+import { ReactElement } from "react";
+
 
 export type ColumnType = 'number' | 'string' | 'date' | null;
 export type ColumnDirection = 'up' | 'down' | 'none';
