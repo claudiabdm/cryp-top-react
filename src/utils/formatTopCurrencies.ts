@@ -1,11 +1,10 @@
-import { TopCurrenciesAPI, Currency } from '../types/models';
-import { fetchData } from './fetchData';
+import { Currency, TopCurrenciesAPI } from '../types/models';
 
-export function fetchTopCurrencies(currencyQuote: string): Promise<Currency[]> {
-  const api = `${process.env.REACT_APP_CRYPTO_API_URL}/top/totaltoptiervolfull?limit=10&tsym=${currencyQuote}`;
-  return fetchData<TopCurrenciesAPI>(api, { method: 'GET' }).then((res) => {
+export function formatTopCurrencies(currencyQuote: string) {
+  return function formatData(data: TopCurrenciesAPI | null) {
+    if (!data) return null;
     const currencies = [] as Currency[];
-    res.Data.forEach((elem) => {
+    data.Data.forEach((elem: any) => {
       const currency = {
         id: elem.CoinInfo.Id,
         name: elem.CoinInfo.Name,
@@ -37,5 +36,5 @@ export function fetchTopCurrencies(currencyQuote: string): Promise<Currency[]> {
       }
     });
     return currencies;
-  });
+  };
 }
