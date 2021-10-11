@@ -14,7 +14,7 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
   const [alertActive, setAlertActive] =
     useState<AriaAttributes['aria-live']>('polite');
   const [ariaBusy, setAriaBusy] = useState(true);
-  const [sortedRows, setSortedRows] = useState<Row[] | null>(null);
+  const [sortedRows, setSortedRows] = useState<Row[] | []>([]);
   const [sortedColumn, setSortedColumn] = useState<{
     name: string | null;
     type: ColumnType;
@@ -123,7 +123,7 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
             aria-live={alertActive}
             aria-busy={ariaBusy}
           >
-            {sortedRows == null ? (
+            {rows == null ? (
               <tr>
                 <td
                   className="center table__spinner"
