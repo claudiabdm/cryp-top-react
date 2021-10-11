@@ -122,6 +122,7 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
             // role="alert"
             aria-live={alertActive}
             aria-busy={ariaBusy}
+            spring={{ stiffness: 240, damping: 40 }}
           >
             {rows == null ? (
               <tr>
