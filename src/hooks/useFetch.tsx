@@ -44,7 +44,7 @@ function fetchReducer<T>(state: State<T>, action: Action<T>): State<T> {
   }
 }
 
-export default function useFetch<T, U>(
+export function useFetch<T>(
   url: RequestInfo,
   options: RequestInit,
   formatData = (data: any) => data
@@ -56,10 +56,10 @@ export default function useFetch<T, U>(
     async function fetchUrl(url: RequestInfo) {
       try {
         const response = await fetch(url, options);
-        const data = (await response.json()) as T;
+        const data = await response.json();
         dispatch({
           type: RESPONSE_COMPLETE,
-          payload: { response: formatData(data) },
+          payload: { response: formatData(data) as T | null },
         });
       } catch (error) {
         dispatch({ type: ERROR, payload: { error } });
@@ -69,5 +69,5 @@ export default function useFetch<T, U>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
-  return [state.data, state.loading, state.error] as [U | null, boolean, any];
+  return state as State<T>;
 }
