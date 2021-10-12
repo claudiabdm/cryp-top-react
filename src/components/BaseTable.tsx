@@ -36,7 +36,6 @@ function BaseTable({ rows = null, columns, rowContent = null }: Props) {
     if (rows != null) {
       const newSortedRows = sortRows(rows, { ...sortedColumn });
       setSortedRows(newSortedRows);
-      console.log('render-layout');
     }
   }, [rows, sortedColumn]);
 
