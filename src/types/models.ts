@@ -48,6 +48,10 @@ export interface Currency {
   flag?: 'up' | 'down' | 'unchanged';
 }
 
+export interface CurrencyOHLCVAPI {
+  Data: { Data: CurrencyOHLCV[]; TimeFrom: number };
+}
+
 export interface CurrencyOHLCV {
   time: number;
   open: number;
@@ -56,5 +60,5 @@ export interface CurrencyOHLCV {
   close: number;
   volumefrom: number;
   volumeto: number;
-  timeDisplay?: string;
+  timeDisplay: string;
 }

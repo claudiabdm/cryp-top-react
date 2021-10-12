@@ -1,0 +1,16 @@
+@use '../styles/mixins/mixins' as *;
+.chart {
+  width: 100%;
+  padding: rem(10px);
+  border-radius: 0.625rem;
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: 0 0 0.3125rem 0.125rem var(--grey-200);
+  &__line-chart {
+    width: 100%;
+    max-height: rem(450px);
+  }
+  &__spinner {
+    width: 100%;
+    margin: 0 auto;
+  }
+}

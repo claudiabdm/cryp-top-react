@@ -1,14 +1,16 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import BaseLoadingSpinner from '../components/BaseLoadingSpinner';
+import CurrencyDetailsChart from '../components/CurrencyDetailsChart';
 import { Currency } from '../types/models';
 import './CurrencyDetails.scss';
 
 interface Props {
   currencies: Currency[] | null;
+  currencyQuote: string;
 }
 
-function CurrencyDetails({ currencies }: Props) {
+function CurrencyDetails({ currencies, currencyQuote }: Props) {
   const { symbol } = useParams<{ symbol: string }>();
   const [currency, setCurrency] = useState<Currency | null | 'Not found'>(null);
 
@@ -60,7 +62,7 @@ function CurrencyDetails({ currencies }: Props) {
             </div>
           </div>
           <div className="currency__chart currency__elem">
-            {/* <CurrencyDetailsChart /> */}
+            <CurrencyDetailsChart currencyQuote={currencyQuote} />
           </div>
           {/* <CurrencyDetailsHistoTable
                className="currency__elem"
