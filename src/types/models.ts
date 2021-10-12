@@ -53,6 +53,7 @@ export interface CurrencyOHLCVAPI {
 }
 
 export interface CurrencyOHLCV {
+  id: string;
   time: number;
   open: number;
   high: number;

@@ -61,7 +61,7 @@ function CurrencyDetailsChart({ currencyQuote }: Props) {
     {
       method: 'GET',
     },
-    formatCurrencyOHLCV
+    formatCurrencyOHLCV(symbol)
   );
 
   const [graphState, dispatch] = useReducer(chartConfigReducer, initialState);
@@ -111,7 +111,7 @@ function CurrencyDetailsChart({ currencyQuote }: Props) {
   };
 
   return (
-    <article className="chart">
+    <article className="chart currency__chart currency__elem">
       <Line
         data={graphState}
         options={options}

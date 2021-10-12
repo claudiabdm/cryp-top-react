@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import BaseLoadingSpinner from '../components/BaseLoadingSpinner';
 import CurrencyDetailsChart from '../components/CurrencyDetailsChart';
+import CurrencyDetailsTable from '../components/CurrencyDetailsTable';
 import { Currency } from '../types/models';
 import './CurrencyDetails.scss';
 
@@ -23,7 +24,7 @@ function CurrencyDetails({ currencies, currencyQuote }: Props) {
   }, [currencies, symbol]);
 
   return (
-    <section className={`currency ${currency == null && 'loading'} `}>
+    <section className={`currency${currency == null ? ' loading' : ''}`}>
       {currency == null && (
         <div className="currency__spinner">
           <BaseLoadingSpinner />
@@ -61,14 +62,11 @@ function CurrencyDetails({ currencies, currencyQuote }: Props) {
               </span>
             </div>
           </div>
-          <div className="currency__chart currency__elem">
-            <CurrencyDetailsChart currencyQuote={currencyQuote} />
-          </div>
-          {/* <CurrencyDetailsHistoTable
-               className="currency__elem"
-               currencyName="currency.fullName"
-               currencySymbol="currency.name"
-             /> */}
+          <CurrencyDetailsChart currencyQuote={currencyQuote} />
+          <CurrencyDetailsTable
+            currencyName={currency.fullName}
+            currencyQuote={currencyQuote}
+          />
         </Fragment>
       )}
     </section>
